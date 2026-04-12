@@ -1,0 +1,121 @@
+#
+# Example config.yaml file for: odp_rbh_to_ribbon
+# Author: dts
+# github account: @conchoecia
+# link to github repo: https://github.com/conchoecia/odp
+# date: 2022-2023
+# license: GNU GPL https://github.com/conchoecia/odp/blob/main/LICENSE
+#
+# Goal: This script creates ribbon plots of genome synteny.
+#
+# First select which plotting order is desired for the chromosomes
+#  chr_sort_order < custom | optimal-top | optimal-size | optimal-random >
+#    custom         - use the custom sorting order for EVERY species in chromorder
+#    optimal-top    - use the custom order for the topmost species, then optimizes everything else
+#    optimal-size   - sort the top species' chromosomes by number of genes, optimize everything else
+#    optimal-chr-or - use `chromorder` when possible, optimize everything else
+#    optimal-random - randomly sort the chromosomes of the top species, optimize everything else
+chr_sort_order: optimal-chr-or
+
+# - If you only want to plot the significant relationships, set to False
+#   - the significant lines will be 0.8
+# - If you want to plot everything, set to True
+#   - the significant lines will be 0.8, the faint lines will be 0.15
+plot_all: False
+
+# - First type in the list of species to plot
+# - In this example we plot the relationships between
+#   three species with the codes "EMU", "RES", and "HCA".
+#   These three species must also be present in the "species"
+#   entry of the config file below.
+species_order:
+  - Pmax
+  - Ssol
+  - Mmer
+  - Medu
+  - Cgig
+
+# - If there are any organisms for which you would like to specify the
+#   chromosome order, then this is the place to do it. The species name
+#   here must match the species name in the "species" part of the config
+#   file.
+# - Only the chromosomes here will be plotted for this species. This is an
+#   easy way to just plot a subset of chromosomes that you are interested in.
+# chromorder:
+#   EMU:
+#     - EMU1
+#     - EMU6
+#     - EMU5
+#     - EMU4
+#     - EMU2
+#     - EMU3
+
+# NOTE : YOU CAN ONLY SPECIFY ONE OF THE FOLLOWING:
+#        COMMENT OUT THE ONE YOU DO NOT USE
+#  - rbh_files_in_order
+#  - rbh_directory
+
+# - This is the list of RBH files output from odp2 or another source.
+# - Each RBH file contains the orthologs between species that should be
+#   plotted.
+# - The number of files will always be the number of species minus one.
+# - Currently, only relationships that are significant with Fisher's exact
+#   test will be plotted here.
+# rbh_files_in_order:
+#   - /path/to/EMU_RES_xy_reciprocal_best_hits.coloredby_BCnS_LGs.plotted.rbh
+#   - /path/to/HCA_RES_xy_reciprocal_best_hits.coloredby_BCnS_LGs.plotted.rbh
+
+# If your rbh files were generated with odp, you can just supply the
+#  path to the
+rbh_directory: /work/hs325/mollusk_synteny/results/Mar28_bivalve/odp/step2-figures/synteny_coloredby_BCnSSimakov2022
+# rbh_directory: /work/hs325/mollusk_synteny/results/Mar28_bivalve/odp/step2-figures/synteny_coloredby_UnicellMetazoanLgs
+
+# - All of the species that are in "species_order" above should be here
+# - This information is important for calculating some stats that are used
+#   for plotting.
+# - The necessary fields are:
+#   - proteins
+#   - chrom
+#   - genome
+# - If you specify "minscafsize", then only scaffolds >= this size are
+#   included in the ribbon plot.
+species:
+  Pmax:
+    proteins: /work/hs325/mollusk_synteny/ref/pecten/ncbi_dataset/data/GCF_902652985.1/protein_dedup.faa 
+    chrom:    /work/hs325/mollusk_synteny/ref/pecten/ncbi_dataset/data/GCF_902652985.1/pecten_dedup.chrom         
+    genome:   /work/hs325/mollusk_synteny/ref/pecten/ncbi_dataset/data/GCF_902652985.1/GCF_902652985.1_xPecMax1.1_genomic.fna   
+    genus: "Pecten" # This is an optional field
+    species: "maximus" # This is an optional field
+    # minscafsize: 1000000
+
+  Ssol:
+    proteins: /work/hs325/mollusk_synteny/ref/solidissima/solidissima_dedup.faa
+    chrom:    /work/hs325/mollusk_synteny/ref/solidissima/solidissima_dedup.chrom
+    genome:   /work/hs325/mollusk_synteny/ref/solidissima/SSo_assembly.fasta
+    genus: "Spisula" # This is an optional field
+    species: "solidissima" # This is an optional field
+    # minscafsize: 1000000
+
+  Mmer:
+    proteins: /work/hs325/mollusk_synteny/ref/hardclam/ncbi_dataset/data/GCF_021730395.1/protein_dedup.faa
+    chrom:    /work/hs325/mollusk_synteny/ref/hardclam/ncbi_dataset/data/GCF_021730395.1/mercenaria_dedup.chrom
+    genome:   /work/hs325/mollusk_synteny/ref/hardclam/ncbi_dataset/data/GCF_021730395.1/GCF_021730395.1_MADL_Memer_1_genomic.fna
+    genus: "Mercenaria" # This is an optional field
+    species: "mercenaria" # This is an optional field
+    # minscafsize: 1000000
+
+  Medu: 
+    proteins: /work/hs325/mollusk_synteny/ref/mytilus/ncbi_dataset/data/GCF_963676685.1/protein_dedup.faa
+    chrom:    /work/hs325/mollusk_synteny/ref/mytilus/ncbi_dataset/data/GCF_963676685.1/mytilus_dedup.chrom
+    genome:   /work/hs325/mollusk_synteny/ref/mytilus/ncbi_dataset/data/GCF_963676685.1/GCF_963676685.1_xbMytEdul2.2_genomic.fna
+    genus: "Mytilus" # This is an optional field
+    species: "edulis" # This is an optional field
+    # minscafsize: 1000000
+
+  Cgig:
+    proteins: /work/hs325/mollusk_synteny/ref/gigas/ncbi_dataset/data/GCF_963853765.1/protein_dedup.faa
+    chrom:    /work/hs325/mollusk_synteny/ref/gigas/ncbi_dataset/data/GCF_963853765.1/gigas_dedup.chrom
+    genome:   /work/hs325/mollusk_synteny/ref/gigas/ncbi_dataset/data/GCF_963853765.1/GCF_963853765.1_xbMagGiga1.1_genomic.fna
+    genus: "Crassostrea" # This is an optional field
+    species: "gigas" # This is an optional field
+    # minscafsize: 1000000

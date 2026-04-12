@@ -1,0 +1,116 @@
+ignore_autobreaks: True       # Skip steps to find breaks in synteny blocks
+diamond_or_blastp: "diamond"  # "diamond" or "blastp"
+# duplicate_proteins: "pass"    
+plot_LGs: True                # Plot the ALGs based on the installed databases
+plot_sp_sp: True              # Plot the synteny between two species, if False just generates .rbh files
+
+# proteins, chrom, genome required
+species:
+
+  Cv2017:
+    proteins: /work/hs325/mollusk_synteny/ref/virginica/xg2017asm/data/GCF_002022765.2/protein_dedup.faa
+    chrom:   /work/hs325/mollusk_synteny/ref/virginica/xg2017asm/data/GCF_002022765.2/virginica2017_dedup.chrom
+    genome:  /work/hs325/mollusk_synteny/ref/virginica/xg2017asm/data/GCF_002022765.2/GCF_002022765.2_C_virginica-3.0_genomic.fna
+    genus: "Crassostrea" 
+    species: "virginica"
+
+  Cv2025yale:
+    proteins: /work/hs325/mollusk_synteny/ref/virginica/yale2025asm/data/GCF_053477285.1/protein_dedup.faa
+    chrom:    /work/hs325/mollusk_synteny/ref/virginica/yale2025asm/data/GCF_053477285.1/virginica2025yale_dedup.chrom
+    genome:   /work/hs325/mollusk_synteny/ref/virginica/yale2025asm/data/GCF_053477285.1/GCF_053477285.1_ASM5347728v1_genomic.fna
+    genus: "Crassostrea" 
+    species: "virginica"
+
+  Cv2025xg:
+    proteins: /work/hs325/mollusk_synteny/ref/virginica/ru2025asm/Cvi_RU25.pep_dedup.faa
+    chrom:    /work/hs325/mollusk_synteny/ref/virginica/ru2025asm/virginica2025XG_dedup.chrom
+    genome:   /work/hs325/mollusk_synteny/ref/virginica/ru2025asm/Cvi_RU25_genome.fa
+    genus: "Crassostrea" 
+    species: "virginica"
+
+  Cgig:
+    proteins: /work/hs325/mollusk_synteny/ref/gigas/ncbi_dataset/data/GCF_963853765.1/protein_dedup.faa
+    chrom:    /work/hs325/mollusk_synteny/ref/gigas/ncbi_dataset/data/GCF_963853765.1/gigas_dedup.chrom
+    genome:   /work/hs325/mollusk_synteny/ref/gigas/ncbi_dataset/data/GCF_963853765.1/GCF_963853765.1_xbMagGiga1.1_genomic.fna
+    genus: "Crassostrea"
+    species: "gigas"
+
+  Oedu:
+    proteins: /work/hs325/mollusk_synteny/ref/edulis/ncbi_dataset/data/GCF_947568905.1/protein_dedup.faa
+    chrom:    /work/hs325/mollusk_synteny/ref/edulis/ncbi_dataset/data/GCF_947568905.1/edulis_dedup.chrom
+    genome:   /work/hs325/mollusk_synteny/ref/edulis/ncbi_dataset/data/GCF_947568905.1/GCF_947568905.1_xbOstEdul1.1_genomic.fna
+    genus: "Ostrea"
+    species: "edulis"
+
+  # Pvul:
+  #   proteins: /work/hs325/mollusk_synteny/ref/gastropods/limpet/ncbi_dataset/data/GCF_932274485.2/protein_dedup.faa
+  #   chrom:    /work/hs325/mollusk_synteny/ref/gastropods/limpet/ncbi_dataset/data/GCF_932274485.2/limpet_dedup.chrom
+  #   genome:   /work/hs325/mollusk_synteny/ref/gastropods/limpet/ncbi_dataset/data/GCF_932274485.2/GCF_932274485.2_xgPatVulg1.2_genomic.fna
+  #   genus: "Patella" # This is an optional field
+  #   species: "vulgata " # This is an optional field
+
+  # Lsax:
+  #   proteins: /work/hs325/mollusk_synteny/ref/gastropods/littorina/ncbi_dataset/data/GCF_037325665.1/protein_dedup.faa
+  #   chrom:    /work/hs325/mollusk_synteny/ref/gastropods/littorina/ncbi_dataset/data/GCF_037325665.1/littorina_dedup.chrom
+  #   genome:   /work/hs325/mollusk_synteny/ref/gastropods/littorina/ncbi_dataset/data/GCF_037325665.1/GCF_037325665.1_US_GU_Lsax_2.0_genomic.fna  
+  #   genus: "Littorina" # This is an optional field
+  #   species: "saxatilis" # This is an optional field
+  
+  # Pmax:
+  #   proteins: /work/hs325/mollusk_synteny/ref/pecten/ncbi_dataset/data/GCF_902652985.1/protein_dedup.faa 
+  #   chrom:    /work/hs325/mollusk_synteny/ref/pecten/ncbi_dataset/data/GCF_902652985.1/pecten_dedup.chrom         
+  #   genome:   /work/hs325/mollusk_synteny/ref/pecten/ncbi_dataset/data/GCF_902652985.1/GCF_902652985.1_xPecMax1.1_genomic.fna   
+  #   genus: "Pecten" # This is an optional field
+  #   species: "maximus" # This is an optional field
+
+  # Rphi:
+  #   proteins: /work/hs325/mollusk_synteny/ref/manila/ncbi_dataset/data/GCF_026571515.1/protein_dedup.faa
+  #   chrom:    /work/hs325/mollusk_synteny/ref/manila/ncbi_dataset/data/GCF_026571515.1/manila_dedup.chrom   
+  #   genome:   /work/hs325/mollusk_synteny/ref/manila/ncbi_dataset/data/GCF_026571515.1/GCF_026571515.1_ASM2657151v2_genomic.fna
+  #   genus: "Ruditapes" # This is an optional field
+  #   species: "philippinarum" # This is an optional field
+
+  # Mare:
+  #   proteins: /work/hs325/mollusk_synteny/ref/softshell/ncbi_dataset/data/GCF_026914265.1/protein_dedup.faa
+  #   chrom:    /work/hs325/mollusk_synteny/ref/softshell/ncbi_dataset/data/GCF_026914265.1/softshell_dedup.chrom      
+  #   genome:   /work/hs325/mollusk_synteny/ref/softshell/ncbi_dataset/data/GCF_026914265.1/GCF_026914265.1_ASM2691426v1_genomic.fna
+  #   genus: "Mya" # This is an optional field
+  #   species: "arenaria" # This is an optional field
+
+  # Ssol:
+  #   proteins: /work/hs325/mollusk_synteny/ref/solidissima/solidissima_dedup.faa
+  #   chrom:    /work/hs325/mollusk_synteny/ref/solidissima/solidissima_dedup.chrom
+  #   genome:   /work/hs325/mollusk_synteny/ref/solidissima/SSo_assembly.fasta
+  #   genus: "Spisula" # This is an optional field
+  #   species: "solidissima" # This is an optional field
+
+  # Mmer:
+  #   proteins: /work/hs325/mollusk_synteny/ref/hardclam/ncbi_dataset/data/GCF_021730395.1/protein_dedup.faa
+  #   chrom:    /work/hs325/mollusk_synteny/ref/hardclam/ncbi_dataset/data/GCF_021730395.1/mercenaria_dedup.chrom
+  #   genome:   /work/hs325/mollusk_synteny/ref/hardclam/ncbi_dataset/data/GCF_021730395.1/GCF_021730395.1_MADL_Memer_1_genomic.fna
+  #   genus: "Mercenaria" # This is an optional field
+  #   species: "mercenaria" # This is an optional field
+
+  # Medu: 
+  #   proteins: /work/hs325/mollusk_synteny/ref/mytilus/ncbi_dataset/data/GCF_963676685.1/protein_dedup.faa
+  #   chrom:    /work/hs325/mollusk_synteny/ref/mytilus/ncbi_dataset/data/GCF_963676685.1/mytilus_dedup.chrom
+  #   genome:   /work/hs325/mollusk_synteny/ref/mytilus/ncbi_dataset/data/GCF_963676685.1/GCF_963676685.1_xbMytEdul2.2_genomic.fna
+  #   genus: "Mytilus" # This is an optional field
+  #   species: "edulis" # This is an optional field
+
+  # Pfuc:
+  #   proteins: /work/hs325/mollusk_synteny/ref/pinctada/pinctada_dedup.faa
+  #   chrom:    /work/hs325/mollusk_synteny/ref/gigas/ncbi_dataset/data/GCF_963853765.1/gigas_dedup.chrom
+  #   genome:   /work/hs325/mollusk_synteny/ref/pinctada/pfuV4.1HapA_ref_genome.fasta
+  #   genus: "Pinctada" # This is an optional field
+  #   species: "fucata" # This is an optional field
+  
+    # minscafsize: 1000000 # optional field. Sets minimum scaffold size to plot.
+    # manual_breaks:    # optional field, tells the software to treat breaks
+    #   - "I:50000"     #  as separate units for calculating the homology p-values
+    #   - "IV:9000000"  #  with Fisher's exact test. Useful for plotting centromeres.
+    #   - "II:99009"    #  Here, we tell the software that Cel chroms I, IV, II have breaks.
+    # plotorder:    # This optional field tells the software to only plot the scaffolds
+    #   - "I"       #  listed here, and to do it in this order. This is useful for plotting
+    #   - "II"      #  comparisons between two species where you want a specific order for
+    #   - "III"     #  both species.
