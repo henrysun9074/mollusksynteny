@@ -9,7 +9,7 @@
 *.blastp
 *.chromsize
 *.tsv
-*.pdf
+# *.pdf
 
 # 3. Ignore all files in specific directories (recursive)
 /ref/
@@ -19,6 +19,7 @@
 
 # 4. Specific result subfolder
 /results/Apr3_oysters_jcvi/
+/results/Apr3_oysters/
 
 # 5. Ignore any 'benchmarks' folder located within any subfolder of /results/
 /results/**/benchmarks/
