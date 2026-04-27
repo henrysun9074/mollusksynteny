@@ -16,6 +16,8 @@
 /logs/
 /jcvi/
 /odp/
+/MCScanX/
+/pansyn/
 
 # 4. Specific result subfolder
 /results/Apr3_oysters_jcvi/
