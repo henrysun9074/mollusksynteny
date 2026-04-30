@@ -92,14 +92,14 @@ out <- run_genespace(gpar, overwrite = T)
 save.image(file = "scripts/genespace_output_Apr29.RData")
 
 #### modify below to plot
-# load("scripts/genespace_output_Apr29.RData")
+load("scripts/genespace_output_Apr29.RData")
 
 # default plot
-# ripDat <- plot_riparian(
-#   gsParam = out, 
-#   refGenome = "solidissima",
-#   genomeIDs = c("limpet", "scallop", "solidissima", "edulis", "virginica"), 
-#   forceRecalcBlocks = FALSE)
+ripDat <- plot_riparian(
+  gsParam = out,
+  refGenome = "solidissima",
+  genomeIDs = c("limpet", "scallop", "solidissima", "edulis", "virginica"),
+  forceRecalcBlocks = FALSE)
 
 # plot with chromosomes in order, no synteny
 # ripDat2 <- plot_riparian(
