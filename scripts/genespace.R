@@ -15,6 +15,7 @@ setwd("/work/hs325/mollusk_synteny")
 library(GENESPACE)
 library(ggplot2)
 library(dichromat)
+library(data.table)
 
 # Define reference genome directory
 ref_dir <- "/work/hs325/mollusk_synteny/ref"
@@ -78,16 +79,32 @@ parsedPaths <- parse_annotations(
 # GENESPACE init
 gpar <- init_genespace(
   wd = wd,
-  path2mcscanx = path2mcscanx)
+  path2mcscanx = path2mcscanx,
+  nCores = 1)
+
+# filter bed files
+bed_dir <- file.path(wd, "bed")
+bed_files <- list.files(bed_dir, pattern = "\\.bed$", full.names = TRUE)
+for(f in bed_files){
+  tmp <- fread(f)
+  # keep top 50 scaffolds for now
+  top_chrs <- tmp[, .N, by = V1][order(-N)][1:50, V1]
+  
+  # overwrite the file
+  tmp_filtered <- tmp[V1 %in% top_chrs]
+  fwrite(tmp_filtered, f, sep = "\t", col.names = FALSE)
+}
+
+save.image(file = "scripts/genespace_output_Apr29.RData")
 
 # start interactive session
-# srun --mem=50G --pty bash -i
+# srun --mem=50G --pty -i
 # run orthofinder here from shell 
 # orthofinder -f /work/hs325/mollusk_synteny/results/genespace/tmp -t 16 -a 1 -X -o /work/hs325/mollusk_synteny/results/genespace/orthofinder
 
 # Sys.setenv(PATH = paste("/hpc/group/schultzlab/hs325/miniconda3/envs/orthofinder/bin/orthofinder", Sys.getenv("PATH"), sep = ":"))
 # Sys.which("orthofinder")
-# run the below with sbatch
+load("scripts/genespace_output_Apr29.RData")
 out <- run_genespace(gpar, overwrite = T)
 save.image(file = "scripts/genespace_output_Apr29.RData")
 

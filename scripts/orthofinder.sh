@@ -18,7 +18,7 @@ source /hpc/group/schultzlab/hs325/miniconda3/etc/profile.d/conda.sh
 conda activate orthofinder
 orthofinder -f /work/hs325/mollusk_synteny/results/genespace/tmp -t 16 -a 1 -X -o /work/hs325/mollusk_synteny/results/genespace/orthofinder
 
-module load R/4.4.0
-module load GLPK
-export R_LIBS_USER=/hpc/home/hs325/R/4.4
-Rscript genespace.R
+# module load R/4.4.0
+# module load GLPK
+# export R_LIBS_USER=/hpc/home/hs325/R/4.4
+# Rscript genespace.R
