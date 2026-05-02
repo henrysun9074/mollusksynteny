@@ -95,8 +95,15 @@ for(f in bed_files){
   fwrite(tmp_filtered, f, sep = "\t", col.names = FALSE)
 }
 
-save.image(file = "scripts/genespace_output_Apr29.RData")
+# set temp directory and rename
+my_temp <- "/work/hs325/mollusk_synteny/results/genespace/tmp"
+if(!dir.exists(my_temp)) dir.create(my_temp)
+Sys.setenv(TMPDIR = my_temp, TMP = my_temp, TEMP = my_temp)
 
+# try to force datatable temp
+options(datatable.tmpdir = "/work/hs325/mollusk_synteny/results/genespace/tmp")
+
+# save.image(file = "scripts/genespace_output_Apr29.RData")
 # start interactive session
 # srun --mem=50G --pty -i
 # run orthofinder here from shell 
@@ -104,7 +111,7 @@ save.image(file = "scripts/genespace_output_Apr29.RData")
 
 # Sys.setenv(PATH = paste("/hpc/group/schultzlab/hs325/miniconda3/envs/orthofinder/bin/orthofinder", Sys.getenv("PATH"), sep = ":"))
 # Sys.which("orthofinder")
-load("scripts/genespace_output_Apr29.RData")
+# load("scripts/genespace_output_Apr29.RData")
 out <- run_genespace(gpar, overwrite = T)
 save.image(file = "scripts/genespace_output_Apr29.RData")
 
