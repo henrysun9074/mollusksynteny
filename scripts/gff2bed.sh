@@ -17,7 +17,7 @@ for species in "${!genome_map[@]}"; do
     
     echo "Processing $species..."
 
-    if [[ "$input_gff" == *"ncbi_dataset"* ]]; then
+    if [[ "$input_gff" == *"ncbi_dataset"* ]]; then # for NCBI genomes
         awk -F'\t' 'BEGIN{OFS="\t"} $3=="CDS" {
             split($9, a, ";"); 
             for(i in a) {
@@ -29,10 +29,7 @@ for species in "${!genome_map[@]}"; do
             }
         }' "$input_gff" | awk -F'\t' '!seen[$4]++' > "$output_bed"
 
-    else
-        # EVM/Custom Logic
-        # 1. Grab Chrom, Start, End, and the ID attribute
-        # 2. Use sed to extract the ID value from 'ID=...'
+    else # for new genomes with evm annotation
         awk -F'\t' '$3=="mRNA" {print $1"\t"$4"\t"$5"\t"$9}' "$input_gff" | \
         sed -E 's/ID=([^; ]+).*/\1/' | \
         awk -v OFS='\t' '{print $1, $2, $3, $4}' | \

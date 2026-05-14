@@ -28,11 +28,11 @@ genome_map <- list(
   limpet = list(
     gff = "gastropods/limpet/ncbi_dataset/data/GCF_932274485.2/genomic.gff",
     faa = "gastropods/limpet/ncbi_dataset/data/GCF_932274485.2/protein_dedup.faa"
-  ), 
+  ),
   scallop = list(
     gff = "pecten/ncbi_dataset/data/GCF_902652985.1/genomic.gff",
     faa = "pecten/ncbi_dataset/data/GCF_902652985.1/protein_dedup.faa"
-  ), 
+  ),
   solidissima = list(
     gff = "solidissima/SSo_feature.gff3",
     faa = "solidissima/solidissima_dedup.faa"
@@ -81,27 +81,31 @@ gpar <- init_genespace(
   wd = wd,
   path2mcscanx = path2mcscanx,
   nCores = 1)
-
-# filter bed files
+# 
+# # filter bed files
 bed_dir <- file.path(wd, "bed")
 bed_files <- list.files(bed_dir, pattern = "\\.bed$", full.names = TRUE)
 for(f in bed_files){
   tmp <- fread(f)
   # keep top 50 scaffolds for now
   top_chrs <- tmp[, .N, by = V1][order(-N)][1:50, V1]
-  
+
   # overwrite the file
   tmp_filtered <- tmp[V1 %in% top_chrs]
   fwrite(tmp_filtered, f, sep = "\t", col.names = FALSE)
 }
 
+### unlink??
+unlink(file.path(wd, "results"), recursive = TRUE)
+unlink(file.path(wd, "syntenicHits"), recursive = TRUE)
+
 # set temp directory and rename
-my_temp <- "/work/hs325/mollusk_synteny/results/genespace/tmp"
+my_temp <- "/work/hs325/mollusk_synteny/results/genespace/temp_test"
 if(!dir.exists(my_temp)) dir.create(my_temp)
 Sys.setenv(TMPDIR = my_temp, TMP = my_temp, TEMP = my_temp)
 
 # try to force datatable temp
-options(datatable.tmpdir = "/work/hs325/mollusk_synteny/results/genespace/tmp")
+options(datatable.tmpdir = "/work/hs325/mollusk_synteny/results/genespace/temp_test")
 
 # save.image(file = "scripts/genespace_output_Apr29.RData")
 # start interactive session
@@ -115,6 +119,9 @@ options(datatable.tmpdir = "/work/hs325/mollusk_synteny/results/genespace/tmp")
 out <- run_genespace(gpar, overwrite = T)
 save.image(file = "scripts/genespace_output_Apr29.RData")
 
+
+
+################################################################################
 #### modify below to plot
 load("scripts/genespace_output_Apr29.RData")
 

@@ -2,6 +2,10 @@ library(macrosyntR)
 library(ggplot2)
 library(dplyr)
 library(stringr)
+library(cowplot)
+library(paletteer)
+
+setwd("/work/hs325/mollusk_synteny")
 
 # run in bash
 # fgrep -f /work/hs325/mollusk_synteny/results/genespace/orthofinder/Results_Apr29/Orthogroups/Orthogroups_SingleCopyOrthologues.txt \
@@ -108,33 +112,84 @@ my_orthologs_cleaned <- my_orthologs_table %>%
 # --- Final Cleanup ---
 main_chrs_sp1 <- as.character(1:14)
 my_orthologs_cleaned <- my_orthologs_cleaned %>%
-  filter(sp1.Chr %in% main_chrs_sp1) 
+  filter(sp1.Chr %in% main_chrs_sp1)
 
-head(my_orthologs_cleaned)
+my_orthologs_cleaned <- my_orthologs_cleaned %>%
+  mutate(
+    sp1.Chr = factor(sp1.Chr, levels = as.character(1:14)),
+    sp2.Chr = factor(sp2.Chr, levels = as.character(1:9)),
+    sp3.Chr = factor(sp3.Chr, levels = as.character(1:19)),
+    sp4.Chr = factor(sp4.Chr, levels = as.character(1:19)),
+    sp5.Chr = factor(sp5.Chr, levels = as.character(1:10))
+  )
 
 # Calculate macrosynteny
 macrosynteny_df <- compute_macrosynteny(my_orthologs_cleaned)
 head(macrosynteny_df)
 
 # plot odp
-plot_oxford_grid(my_orthologs_cleaned,
+pal_mytilus <- c("#A52A2A", "#FFD39B", "#66CDAA", "#8EE5EE", "#7FFF00", "#FFD700", 
+                 "#FF7F00", "#474747", "#6495ED", "#FF3030", "#0000EE", "#FF1493", 
+                 "#8A2BE2", "#080808")
+p <- plot_oxford_grid(my_orthologs_cleaned,
                  sp1_label = "Mussel",
-                 sp2_label = "Limpet")
+                 sp2_label = "Limpet",
+                 color_by = "sp1.Chr", 
+                 color_palette = pal_mytilus)
+ggsave("results/figs/edulis_limpet.jpg", p, width = 8, height = 8, dpi = 300)
 
 # plot macrosynteny
 plot_macrosynteny(macrosynteny_df,
                   sp1_label = "Mussel",
-                  sp2_label = "Limpet")
+                  sp2_label = "Limpet") + theme_cowplot()
 
-
-############################ TODO fix to calculate LGs correctly ###############
 # plot chord diagram
 my_labels <- c("Mussel", "Limpet", "Scallop", "Surfclam", "Oyster")
 plot_chord_diagram(
   my_orthologs_cleaned, 
   species_labels = my_labels,
   color_by = "LGs"
-) + 
+) +
   theme_cowplot() +
   theme(
-    legend.position = "none")
+    legend.position = "none",
+    axis.line        = element_blank(),
+    axis.text.x      = element_blank(),
+    axis.text.y      = element_blank(),
+    axis.ticks       = element_blank(),
+    axis.title.x     = element_blank(),
+    axis.title.y     = element_blank()
+  )
+
+### reorder plot
+my_orthologs_reordered <- my_orthologs_cleaned %>%
+  select(
+    sp1.ID = sp2.ID, sp1.Chr = sp2.Chr, sp1.Start = sp2.Start, sp1.End = sp2.End, sp1.Index = sp2.Index,
+    sp2.ID = sp3.ID, sp2.Chr = sp3.Chr, sp2.Start = sp3.Start, sp2.End = sp3.End, sp2.Index = sp3.Index,
+    sp3.ID = sp4.ID, sp3.Chr = sp4.Chr, sp3.Start = sp4.Start, sp3.End = sp4.End, sp3.Index = sp4.Index,
+    sp4.ID = sp1.ID, sp4.Chr = sp1.Chr, sp4.Start = sp1.Start, sp4.End = sp1.End, sp4.Index = sp1.Index,
+    sp5.ID = sp5.ID, sp5.Chr = sp5.Chr, sp5.Start = sp5.Start, sp5.End = sp5.End, sp5.Index = sp5.Index
+  )
+
+my_new_labels <- c("P. vul", "P. max", "S. sol", "M. edu", "C. vir")
+# pal_19 <- paletteer_d("ggsci::category20b_d3")
+pal_19 <- paletteer_d("ggthemes::Tableau_20")
+
+ribbon <- plot_chord_diagram(
+  my_orthologs_reordered, 
+  species_labels = my_new_labels,
+  color_by = "LGs"
+) +
+  scale_color_manual(values = pal_19) +
+  theme_cowplot() +
+  theme(
+    legend.position = "none",
+    axis.line        = element_blank(),
+    axis.text.x      = element_blank(),
+    axis.text.y      = element_blank(),
+    axis.ticks       = element_blank(),
+    axis.title.x     = element_blank(),
+    axis.title.y     = element_blank()
+  )
+ribbon
+ggsave("results/figs/ribbon.jpg", ribbon, width = 7, height = 5, dpi = 300)

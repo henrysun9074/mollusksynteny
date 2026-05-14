@@ -7,7 +7,7 @@
 #SBATCH --mem=8G
 #SBATCH --time=24:00:00
 #SBATCH --mail-type=ALL
-#SBATCH --mail-user=hs325@duke.edu
+#SBATCH --mail-user=rrw34@duke.edu
 
 # run this script to remove duplicates from protein file
 
@@ -15,9 +15,9 @@
 # agat_sp_keep_longest_isoform.pl -fasta input.faa -gff input.gff3 -o longest_proteins.faa
 
 ################## GENERATE DEDUPLICATED FAA FILE
-root="/work/hs325/mollusk_synteny/ref/edulis/ncbi_dataset/data/GCF_947568905.1"
+root="/work/hs325/mollusk_synteny/ref/gastropods/bathyacmaea/"
 cd $root
-find . -type f -name "*.faa" -exec sh -c 'seqkit rmdup -s "$1" > "${1%.faa}_dedup.faa"' _ {} \;
+find . -type f -name "*.fa" -exec sh -c 'seqkit rmdup -s "$1" > "${1%.faa}_dedup.fa"' _ {} \;
 
 ################## GENERATE CORRESPONDING CHROM FILE FROM FAA FILE ENTRIES
 python3 - <<'PY'
@@ -26,7 +26,7 @@ import glob
 import gzip
 
 # adjust this for folders if you don't want to rerun it on entire base directory 
-root = "/work/hs325/mollusk_synteny/ref/edulis"
+root = "/work/hs325/mollusk_synteny/ref/gastropods/bathyacmaea"
 
 def open_maybe_gzip(path):
     return gzip.open(path, "rt") if path.endswith(".gz") else open(path, "r")

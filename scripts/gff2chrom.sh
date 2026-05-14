@@ -89,3 +89,7 @@ python3 /work/hs325/mollusk_synteny/scripts/NCBIgff2chrom_custom.py /work/hs325/
 # Ostrea edulis
 python3 NCBIgff2chrom.py /work/hs325/mollusk_synteny/ref/edulis/ncbi_dataset/data/GCF_947568905.1/genomic.gff \
     > /work/hs325/mollusk_synteny/ref/edulis/ncbi_dataset/data/GCF_947568905.1/edulis.chrom
+    
+# bathyacmaea
+python3 NCBIgff2chrom_custom.py /work/hs325/mollusk_synteny/ref/gastropods/bathyacmaea/Bathyacmaea_lactea.gff \
+    > /work/hs325/mollusk_synteny/ref/gastropods/bathyacmaea/Bathyacmaea_lactea.chrom
